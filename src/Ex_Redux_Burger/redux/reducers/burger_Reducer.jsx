@@ -12,15 +12,15 @@ let initialState = {
 };
 
 export let burgerReducer = (state = initialState, action) => {
-  switch (action.type) {
+  let { type, name, value } = action;
+
+  switch (type) {
     case ADD_ACTION: {
       let burgerMaterialClone = [...state.burgerMaterial];
       //   console.log(action);
 
-      let index = burgerMaterialClone.findIndex(
-        (item) => item.name === action.payload.name
-      );
-      burgerMaterialClone[index].quatity += action.payload.value;
+      let index = burgerMaterialClone.findIndex((item) => item.name === name);
+      burgerMaterialClone[index].quatity += value;
       if (burgerMaterialClone[index].quatity < 0) {
         burgerMaterialClone[index].quatity = 0;
       }
