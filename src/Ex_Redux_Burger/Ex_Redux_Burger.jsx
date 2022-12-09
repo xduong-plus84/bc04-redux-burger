@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { addComponent } from "./burgerSlice";
 import "./css/BaiTapBurger.css";
-import { addAction } from "./redux/actions/addAction";
 
 class Ex_Redux_Burger extends Component {
   renderBreadMid = () => {
@@ -9,9 +9,9 @@ class Ex_Redux_Burger extends Component {
 
     let breadMide = [];
 
-    this.props.burgerMaterial.forEach(({ name, quatity }) => {
+    this.props.burgerMaterial.forEach(({ name, quatity }, index) => {
       for (let i = 0; i < quatity; i++) {
-        breadMide.push(<div className={name}></div>);
+        breadMide.push(<div key={index.toString() + i} className={name}></div>);
       }
     });
 
@@ -20,7 +20,7 @@ class Ex_Redux_Burger extends Component {
   renderMenu = () => {
     return this.props.burgerMaterial.map(({ name, quatity, price }, index) => {
       return (
-        <tr>
+        <tr key={index}>
           <td>{name}</td>
           <td>
             <button
@@ -93,14 +93,14 @@ class Ex_Redux_Burger extends Component {
 
 let mapStateToProps = (state) => {
   return {
-    burgerMaterial: state.burgerReducer.burgerMaterial,
+    burgerMaterial: state.burgerReducer,
   };
 };
 
 let mapDispatchToProps = (dispatch) => {
   return {
     handleAdd: (name, value) => {
-      dispatch(addAction(name, value));
+      dispatch(addComponent({ name, value }));
     },
   };
 };
